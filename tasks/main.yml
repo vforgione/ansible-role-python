@@ -16,15 +16,15 @@
     state: latest
     update_cache: yes
 
-- name: installing pip
-  command: curl https://bootstrap.pypa.io/get-pip.py | python{{ python_version }}
+- name: downloading pip installer
+  get_url:
+    url: https://bootstrap.pypa.io/get-pip.py
+    dest: /tmp/get-pip.py
+    mode: 0755
   when: python_version >= 3
 
-- name: symlinking pip3 installation
-  file:
-    src: /usr/local/bin/pip
-    dest: /usr/local/bin/pip3
-    state: link
+- name: installing pip
+  command: python{{ python_version }} /tmp/get-pip.py
   when: python_version >= 3
 
 - name: installing pip
@@ -37,7 +37,7 @@
   pip:
     name: virtualenv
     state: latest
-    executable: pip3
+    executable: pip{{ python_version }}
   when: python_version >= 3
 
 - name: installing virtualenv

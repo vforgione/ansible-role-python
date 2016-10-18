@@ -12,14 +12,19 @@
 
 - name: installing python {{ python_version }} dev headers
   apt:
-    name: "python{{ python_version|int }}-dev"
+    name: "python{{ python_version }}-dev"
     state: latest
     update_cache: yes
 
 - name: installing pip
-  apt:
-    name: python3-pip
-    state: latest
+  command: curl https://bootstrap.pypa.io/get-pip.py | python{{ python_version }}
+  when: python_version >= 3
+
+- name: symlinking pip3 installation
+  file:
+    src: /usr/local/bin/pip
+    dest: /usr/local/bin/pip3
+    state: link
   when: python_version >= 3
 
 - name: installing pip

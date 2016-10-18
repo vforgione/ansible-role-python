@@ -4,19 +4,17 @@
   apt_repository:
     repo: 'ppa:fkrull/deadsnakes'
 
-- name: updating apt cache
-  apt:
-    update_cache: yes
-
 - name: installing python version {{ python_version }}
   apt:
     name: "python{{ python_version }}"
-    state: present
+    state: latest
+    update_cache: yes
 
 - name: installing python {{ python_version }} dev headers
   apt:
     name: "python{{ python_version|int }}-dev"
-    state: present
+    state: latest
+    update_cache: yes
 
 - name: installing pip
   apt:

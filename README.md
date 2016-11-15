@@ -1,47 +1,41 @@
-# Python Ansible Role
+# Python
 
-This role installs python, python dev headers, pip and virtualenv on Ubuntu systems.
+A role for installing specific versions of Python from the [DeadSnakes PPA](https://launchpad.net/~fkrull/+archive/ubuntu/deadsnakes)
 
 
-## Usage
+## Requirements
 
-### Variables
+None
 
-#### Required
 
-There are __no required variables__ for this role.
+## Role Variables
 
-#### Configurable
+| name             | description                                                          | default | example |
+| ---------------- | -------------------------------------------------------------------- | ------- | ------- |
+| `python_version` | the version number of python to use for installing and running uWSGI | `3.5`   | `2.7`   |
 
-| Name           | Default | Description                                                                                                                          |
-| -------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| python_version | 3.5     | The version number of Python you want to install from the [Deadsnakes PPA](https://launchpad.net/~fkrull/+archive/ubuntu/deadsnakes) |
 
-### Playbook Examples
+## Dependencies
 
-#### Minimal
+None
+
+
+## Example Playbook
 
 ```yaml
-- hosts: all
+- hosts: django-apps
   become: yes
   become_user: root
   roles:
-    - role: python
+    - role: vforgione.python
+      python_version: 3.5
 ```
 
-This will install the default configuration of `python3.5`, `python3-dev`, `pip3` and `virtualenv` (installed by `pip3`).
+## License
 
-__Note:__ `pip3` is used to isolate any future funny business with site packages. You should also be using virtualenvs everywhere anyway...
- 
-#### Configured
+MIT
 
-```yaml
-- hosts: all
-  become: yes
-  become_user: root
-  roles:
-    - role: python
-      python_version: 2.6
-```
 
-This will install `python2.6`, `python-dev`, `pip` and `virtualenv`.
+## Author Information
+
+[Vince Forgione](https://github.com/vforgione)

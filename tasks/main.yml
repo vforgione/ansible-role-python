@@ -3,45 +3,26 @@
 - name: adding the deadsnakes ppa
   apt_repository:
     repo: 'ppa:fkrull/deadsnakes'
+    update_cache: yes
 
 - name: installing python version {{ python_version }}
   apt:
     name: "python{{ python_version }}"
     state: latest
-    update_cache: yes
 
 - name: installing python {{ python_version }} dev headers
   apt:
     name: "python{{ python_version }}-dev"
     state: latest
-    update_cache: yes
 
 - name: downloading pip installer
   get_url:
     url: https://bootstrap.pypa.io/get-pip.py
     dest: /tmp/get-pip.py
     mode: 0755
-  when: python_version >= 3
 
 - name: installing pip
   command: python{{ python_version }} /tmp/get-pip.py
-  when: python_version >= 3
-
-- name: installing pip
-  apt:
-    name: python-pip
-    state: latest
-  when: python_version < 3
 
 - name: installing virtualenv
-  pip:
-    name: virtualenv
-    state: latest
-    executable: pip{{ python_version }}
-  when: python_version >= 3
-
-- name: installing virtualenv
-  pip:
-    name: virtualenv
-    state: latest
-  when: python_version < 3
+  command: python{{ python_version }} -m pip install virtualenv

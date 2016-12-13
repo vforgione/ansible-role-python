@@ -4,16 +4,38 @@
   apt_repository:
     repo: 'ppa:fkrull/deadsnakes'
     update_cache: yes
+  become: yes
+  become_user: root
 
 - name: installing python version {{ python_version }}
   apt:
     name: "python{{ python_version }}"
     state: latest
+  become: yes
+  become_user: root
 
 - name: installing python {{ python_version }} dev headers
   apt:
     name: "python{{ python_version }}-dev"
     state: latest
+  become: yes
+  become_user: root
+
+- name: "chowning python{{ python_version }} dist packages"
+  file:
+    path: "/usr/local/lib/python{{ python_version }}/dist-packages"
+    state: directory
+    mode: 0777
+  become: yes
+  become_user: root
+
+- name: "chowning /usr/local/bin"
+  file:
+    path: "/usr/local/bin"
+    state: directory
+    mode: 0777
+  become: yes
+  become_user: root
 
 - name: downloading pip installer
   get_url:

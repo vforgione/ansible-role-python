@@ -2,7 +2,7 @@
 
 - name: adding the deadsnakes ppa
   apt_repository:
-    repo: 'ppa:fkrull/deadsnakes'
+    repo: 'ppa:deadsnakes/ppa'
     update_cache: yes
   become: yes
   become_user: root

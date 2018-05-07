@@ -48,4 +48,4 @@
   become: yes
 
 - name: installing virtualenv
-  command: python{{ python_version }} -m pip install virtualenv
+  command: python{{ python_version }} -m pip install virtualenv --user

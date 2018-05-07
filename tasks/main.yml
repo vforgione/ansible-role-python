@@ -45,7 +45,6 @@
 
 - name: installing pip
   command: python{{ python_version }} /tmp/get-pip.py
-  become: yes
 
 - name: installing virtualenv
-  command: python{{ python_version }} -m pip install virtualenv --user
+  command: python{{ python_version }} -m pip install virtualenv
